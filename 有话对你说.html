@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>和你说实话</title>
+    <style>
+        /* 通用样式 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fef8e8;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+
+        h1, p {
+            margin: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #ffa07a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            animation: fadeIn 1s ease-in-out;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff7f50;
+        }
+
+        /* 弹窗样式 */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border: 2px solid #ffa07a;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        #popup h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #ff4500;
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 第一页 -->
+    <div id="page1" style="display: flex; flex-direction: column;">
+        <h1>我想了很久，还是想和你说实话<br>（不是开玩笑，麻烦你看看吧）</h1>
+        <button onclick="showPage2()">什么话？</button>
+    </div>
+
+    <!-- 第二页 -->
+    <div id="page2" style="display: none; flex-direction: column;">
+        <h1 id="sentence">咋俩多久没有见面了啊</h1>
+        <button onclick="showNextSentence()">下一句</button>
+    </div>
+
+    <!-- 第三页 -->
+    <div id="page3" style="display: none; flex-direction: column;">
+        <h1>如果你觉得我有些，emm……烦或者冒犯请原谅</h1>
+        <button onclick="showPage4()">结束</button>
+    </div>
+
+    <!-- 第四页 -->
+    <div id="page4" style="display: none; flex-direction: column;">
+        <h1>给我发条语音吧</h1>
+        <button onclick="exitPage()">好，答应你了</button>
+        <button onclick="showPopup()">算了吧</button>
+    </div>
+
+    <!-- 弹窗 -->
+    <div id="popup">
+        <h2>这么狠心的吗</h2>
+    </div>
+
+    <script>
+        // 第二页的句子内容
+        const sentences = [
+            "好久不见你面孔，我都有些难受了",
+            "我想你了，真的想你了",
+            "正是因为想你了，所以才总是想约你出去玩，因为对我来说和你在一起的时光总是很快乐的",
+            "但是我总是失败，真的不是我故意的，不是我不守信用",
+            "还请你原谅",
+            "最后想说的，你能给我发条语音吗？说啥都行，就是想听听你的声音了……真的真的……"
+        ];
+        let sentenceIndex = 0;
+
+        // 切换到第二页
+        function showPage2() {
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').style.display = 'flex';
+        }
+
+        // 显示下一句或切换到第三页
+        function showNextSentence() {
+            const sentenceElement = document.getElementById('sentence');
+            if (sentenceIndex < sentences.length) {
+                sentenceElement.textContent = sentences[sentenceIndex];
+                sentenceIndex++;
+            } else {
+                document.getElementById('page2').style.display = 'none';
+                document.getElementById('page3').style.display = 'flex';
+            }
+        }
+
+        // 切换到第四页
+        function showPage4() {
+            document.getElementById('page3').style.display = 'none';
+            document.getElementById('page4').style.display = 'flex';
+        }
+
+        // 退出页面（模拟关闭功能）
+        function exitPage() {
+            alert("感谢你答应了我！页面将退出。");
+            window.open('', '_self').close();
+        }
+
+        // 显示弹窗并自动关闭
+        function showPopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 2000); // 2秒后关闭
+        }
+
+        // 禁止页面主动退出
+        window.onbeforeunload = function () {
+            return "你确定要离开吗？";
+        };
+    </script>
+</body>
+</html>
